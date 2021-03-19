@@ -2,7 +2,7 @@
 <p>
     {{ vehicle | json }}
 </p>
-<form #f="ngForm" (ngSubmit)="submit()">
+<form #f="ngForm" (ngSubmit)="submit()" novalidate>
     <div class="form-group">
         <label for="make">Make</label>
         <select id="make" class="form-control" 
@@ -34,15 +34,15 @@
     </div>
     <p>Is this vehicle registered?</p>
     <label for="registered" class="form-check-inline">
-        <input type="radio" name="isRegistered" id="registered" value="true" [(ngModel)]="vehicle.isRegistered" > Yes
+        <input type="radio" name="isRegistered" id="registered" [value]="true" [(ngModel)]="vehicle.isRegistered" > Yes
     </label>
     <label for="notRegistered" class="form-check-inline">
-        <input type="radio" name="isRegistered" id="notRegistered" value="false" [(ngModel)]="vehicle.isRegistered" > No
+        <input type="radio" name="isRegistered" id="notRegistered" [value]="false" [(ngModel)]="vehicle.isRegistered" > No
     </label>    
     <h2>Features</h2>
     <div *ngFor="let f of features" class="checkbox">
         <label for="feature{{ f.id }}">
-            <input type="checkbox" id="{{ f.id }}" (change)="onFeatureToggle(f.id, $event)"> {{ f.name }}
+            <input type="checkbox" id="{{ f.id }}" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)"> {{ f.name }}
         </label>
     </div>
     <h2>Contact</h2>
@@ -86,4 +86,5 @@
         Please specify the email.
     </div>
     <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+    <button *ngIf="vehicle.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
 </form>

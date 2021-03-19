@@ -22,8 +22,19 @@ export class VehicleService {
   }
 
   create(vehicle) {
-    // console.log(vehicle);
     return this.http.post('/api/vehicles', vehicle).pipe(
+      map(res => res)
+    );
+  }
+
+  getVehicle(id) {
+    return this.http.get('/api/vehicles/' + id).pipe(
+      map(res => res)
+    );
+  }
+
+  delete(id) {
+    return this.http.delete('/api/vehicles/' + id).pipe(
       map(res => res)
     );
   }
