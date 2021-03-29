@@ -1,0 +1,24 @@
+<nav *ngIf="totalItems > pageSize">
+    <ul class="pagination">
+        <li class="page-item" 
+            [class.page-item.disabled] ="currentPage == 1">
+            <a (click)="previous()" 
+                class="page-link">
+                Previous
+            </a>
+        </li>
+        <li class="page-item" 
+            [class.active]="currentPage == page" 
+            *ngFor="let page of pages" 
+            (click)="changePage(page)">
+            <a class="page-link">{{ page }}</a>
+        </li>        
+        <li class="page-item" 
+            [class.page-item.disabled] ="currentPage == pages.length">
+            <a (click)="next()"
+                class="page-link">
+                Next
+            </a>
+        </li>
+      </ul>
+</nav>  

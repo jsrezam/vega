@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class VehicleService {
-
+  private readonly vehiclesEndpoint = '/api/vehicles/';
   constructor(private http: HttpClient) { }
 
   getMakes() {
@@ -22,20 +22,39 @@ export class VehicleService {
   }
 
   create(vehicle) {
-    return this.http.post('/api/vehicles', vehicle).pipe(
+    return this.http.post(this.vehiclesEndpoint, vehicle).pipe(
       map(res => res)
     );
   }
 
   getVehicle(id) {
-    return this.http.get('/api/vehicles/' + id).pipe(
+    return this.http.get(this.vehiclesEndpoint + id).pipe(
       map(res => res)
     );
   }
 
   delete(id) {
-    return this.http.delete('/api/vehicles/' + id).pipe(
+    return this.http.delete(this.vehiclesEndpoint + id).pipe(
       map(res => res)
     );
+  }
+
+  getVehicles(filter) {
+    return this.http.get(this.vehiclesEndpoint + '?' + this.toQueryString(filter)).pipe(
+      map(res => res)
+    );
+  }
+
+  toQueryString(obj) {
+    let parts = [];
+    for (let property in obj) {
+      let value = obj[property];
+      if (value != null && value != undefined)
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+
+    }
+
+    return parts.join('&');
+
   }
 }
