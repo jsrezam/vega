@@ -1,3 +1,4 @@
+import { Auth0Service } from './services/auth0.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  constructor(public auth0Service: Auth0Service) { }
 }

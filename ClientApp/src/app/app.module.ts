@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from "@auth0/auth0-angular";
+import { environment as env } from './../environments/environment';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -20,6 +22,14 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
 import { PhotosComponent } from './photos/photos.component';
 import { PhotoService } from './services/photo.service';
+import { LoginButtonComponent } from './login-button/login-button.component';
+import { LogoutButtonComponent } from './logout-button/logout-button.component';
+import { AdminComponent } from './admin/admin.component';
+import { NonAuthorizedComponent } from './non-authorized/non-authorized.component';
+import { Auth0Service } from './services/auth0.service';
+import { Auth0Guard } from './services/auth0-guard.service';
+import { AdminAuth0Guard } from './services/admin-auth0-guard.service';
+import { LoadingComponent } from './loading/loading.component';
 // import { AuthService } from './services/auth.service';
 
 @NgModule({
@@ -34,11 +44,20 @@ import { PhotoService } from './services/photo.service';
     PaginationComponent,
     ViewVehicleComponent,
     PhotosComponent,
+    LoginButtonComponent,
+    LogoutButtonComponent,
+    AdminComponent,
+    NonAuthorizedComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    AuthModule.forRoot({
+      ...env.auth,
+      // cacheLocation: 'localstorage'
+    }),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     RouterModule.forRoot([
@@ -49,15 +68,17 @@ import { PhotoService } from './services/photo.service';
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'photos', component: FetchDataComponent },
+      { path: 'admin', component: AdminComponent, canActivate: [Auth0Guard, AdminAuth0Guard] },
+      { path: 'non-authorized', component: NonAuthorizedComponent },
     ])
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
     VehicleService,
     PhotoService,
-    // AuthService
-
+    Auth0Service,
+    Auth0Guard,
+    AdminAuth0Guard
   ],
   bootstrap: [AppComponent]
 })

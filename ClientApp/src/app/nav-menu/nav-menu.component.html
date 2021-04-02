@@ -39,6 +39,14 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
+          <li
+            *ngIf="auth0Service.isInRole('Admin')"
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark" [routerLink]="['/admin']">Admin</a>
+          </li>          
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/counter']"
               >Counter</a
@@ -48,6 +56,15 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
               >Fetch data</a
             >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a *ngIf="auth0Service.auth0User$ | async as user" class="nav-link ">
+              hello! {{user.name}} 
+           </a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <login-button *ngIf="!(auth0Service.isAuthenticated() | async)"></login-button>
+            <logout-button *ngIf="(auth0Service.isAuthenticated() | async)"></logout-button>
           </li>
         </ul>
       </div>
