@@ -11,7 +11,7 @@ import { HttpEventType } from '@angular/common/http';
   styleUrls: ['./view-vehicle.component.css']
 })
 export class ViewVehicleComponent implements OnInit {
-  @ViewChild("fileInput", { static: false }) fileInput: ElementRef;
+  @ViewChild("fileInput") fileInput: ElementRef;
   vehicle: any;
   vehicleId: number;
   photos: any[];
