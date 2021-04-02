@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { SaveVehicle } from '../models/vehicle';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class VehicleService {
 
   getVehicle(id) {
     return this.http.get(this.vehiclesEndpoint + id).pipe(
+      map(res => res)
+    );
+  }
+
+  update(vehicle: SaveVehicle) {
+    return this.http.put(this.vehiclesEndpoint + vehicle.id, vehicle).pipe(
       map(res => res)
     );
   }

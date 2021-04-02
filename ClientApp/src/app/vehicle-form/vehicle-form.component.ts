@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { Vehicle } from '../models/vehicle';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -31,9 +32,11 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, //Read routes parameters
     private router: Router,
-    private vehicleService: VehicleService) {
+    private vehicleService: VehicleService,
+    private toastyService: ToastrService) {
+
     route.params.subscribe(p => {
-      this.vehicle.id = +p['id'];
+      this.vehicle.id = +p['id'] || 0;
     });
   }
 
@@ -94,17 +97,16 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle)
-      .subscribe(
-        x => console.log(x));
+    // this.vehicleService.create(this.vehicle)
+    //   .subscribe(
+    //     x => console.log(x));
+    var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle);
+    result$.subscribe((vehicle: any) => {
+      this.toastyService.success("Data was sucessfully saved.", "Success", {
+        onActivateTick: true
+      })
+      this.router.navigate(['/vehicles/', vehicle.id])
+    });
   }
 
-  delete() {
-    if (confirm("Are you sure ?")) {
-      this.vehicleService.delete(this.vehicle.id)
-        .subscribe(x => {
-          this.router.navigate(['/']);
-        });
-    }
-  }
 }

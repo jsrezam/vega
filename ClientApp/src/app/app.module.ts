@@ -17,7 +17,10 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
-// import { PaginationComponent } from './pagination/pagination.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
+import { PhotosComponent } from './photos/photos.component';
+import { PhotoService } from './services/photo.service';
+// import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
     VehicleFormComponent,
     VehicleListComponent,
     PaginationComponent,
+    ViewVehicleComponent,
+    PhotosComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,15 +44,20 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'Vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'photos', component: FetchDataComponent },
     ])
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    VehicleService
+    VehicleService,
+    PhotoService,
+    // AuthService
+
   ],
   bootstrap: [AppComponent]
 })

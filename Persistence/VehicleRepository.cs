@@ -65,7 +65,6 @@ namespace vega.Persistence
 
         }
 
-
         public async Task AddAsync(Vehicle vehicle)
         {
             await context.Vehicles.AddAsync(vehicle);
