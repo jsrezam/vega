@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vega.Controllers.Resources;
@@ -21,6 +22,7 @@ namespace vega.Controllers
         }
 
         [HttpGet("/api/makes/")]
+        [Authorize]
         public async Task<IEnumerable<MakeResource>> GetMakes()
         {
             var makes = await context.Makes.Include(m => m.Models).ToListAsync();

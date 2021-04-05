@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { SaveVehicle } from '../models/vehicle';
+import { environment as env } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   getMakes() {
-    return this.http.get('/api/makes').pipe(
+    return this.http.get(`${env.dev.apiUrl}/api/makes`).pipe(
       map(res => res)
     );
   }
@@ -23,7 +24,7 @@ export class VehicleService {
   }
 
   create(vehicle) {
-    return this.http.post(this.vehiclesEndpoint, vehicle).pipe(
+    return this.http.post(env.dev.apiUrl + this.vehiclesEndpoint, vehicle).pipe(
       map(res => res)
     );
   }
@@ -35,13 +36,13 @@ export class VehicleService {
   }
 
   update(vehicle: SaveVehicle) {
-    return this.http.put(this.vehiclesEndpoint + vehicle.id, vehicle).pipe(
+    return this.http.put(env.dev.apiUrl + this.vehiclesEndpoint + vehicle.id, vehicle).pipe(
       map(res => res)
     );
   }
 
   delete(id) {
-    return this.http.delete(this.vehiclesEndpoint + id).pipe(
+    return this.http.delete(env.dev.apiUrl + this.vehiclesEndpoint + id).pipe(
       map(res => res)
     );
   }

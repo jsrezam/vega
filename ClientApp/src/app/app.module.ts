@@ -5,11 +5,11 @@ import { VehicleService } from './services/vehicle.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthModule } from "@auth0/auth0-angular";
+import { AuthModule, AuthHttpInterceptor } from "@auth0/auth0-angular";
 import { environment as env } from './../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -57,6 +57,12 @@ import { LoadingComponent } from './loading/loading.component';
     AuthModule.forRoot({
       ...env.auth,
       // cacheLocation: 'localstorage'
+      httpInterceptor: {
+        allowedList: [
+          `${env.dev.apiUrl}/api/makes`,
+          `${env.dev.apiUrl}/api/vehicles/*`
+        ]
+      }
     }),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
@@ -73,6 +79,7 @@ import { LoadingComponent } from './loading/loading.component';
     ])
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     { provide: ErrorHandler, useClass: AppErrorHandler },
     VehicleService,
     PhotoService,
