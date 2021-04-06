@@ -34,15 +34,15 @@
       </ul>
       <br/>
       <p>
-        <a class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
-        <button class="btn btn-danger" (click)="delete()">Delete</button>
-        <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
+        <a *ngIf="auth0Service.isAuthenticated$ | async" class="btn btn-primary" [routerLink]="['/vehicles/edit/', vehicle.id]">Edit</a>
+        <button *ngIf="auth0Service.isAuthenticated$ | async" class="btn btn-danger" (click)="delete()">Delete</button>
+        <a class="btn btn-outline-primary" [routerLink]="['/vehicles']">View All Vehicles</a>
       </p>
     </div>
     <!-- Photos tab -->
     <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photos-tab"  >
       <h2>Photos</h2>
-      <input type="file" (change)="uploadPhoto()" #fileInput>
+      <input *ngIf="auth0Service.isAuthenticated$ | async" type="file" (change)="uploadPhoto()" #fileInput>
       <div>
         <div class="progress" *ngIf="progress > 0">
             <div class="progress-bar" [style.width]="progress + '%'">

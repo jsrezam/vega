@@ -1,5 +1,5 @@
 <h2>Vehicles</h2>
-<p>
+<p *ngIf="auth0Service.isAuthenticated$ | async">
   <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
 </p>
 <div class="form-group card card-inverse">
@@ -12,7 +12,9 @@
                 <option value=""></option>
                 <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
             </select>
-            <button type="button" class="btn btn-light" (click)="resetFilter()">Reset</button>
+            <p>
+              <button type="button" class="btn btn-outline-primary" (click)="resetFilter()">Reset</button>
+            </p>            
         </div>
     </div>   
 </div>

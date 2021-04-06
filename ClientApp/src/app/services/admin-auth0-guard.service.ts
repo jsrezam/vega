@@ -10,7 +10,7 @@ export class AdminAuth0Guard implements CanActivate {
     constructor(private auth0Service: Auth0Service, private router: Router) { }
 
     canActivate(): Observable<boolean> {
-        return this.auth0Service.isInRole$('Admin').pipe(map(res => {
+        return this.auth0Service.isInRole$('admin').pipe(map(res => {
             if (res) return true;
             this.router.navigate(['/non-authorized']);
             return false;

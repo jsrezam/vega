@@ -9,6 +9,7 @@ export const environment = {
     audience: "https://api.vega.dev.project"
   },
   dev: {
+    rolesClaim: "http://vega.dev.com/roles",
     apiUrl: "https://localhost:5001"
   }
 };

@@ -1,3 +1,4 @@
+import { Auth0Service } from './../services/auth0.service';
 import { PhotoService } from './../services/photo.service';
 import { VehicleService } from './../services/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class ViewVehicleComponent implements OnInit {
   progress: any;
 
   constructor(
+    private auth0Service: Auth0Service,
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastrService,

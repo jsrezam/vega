@@ -22,7 +22,6 @@ namespace vega.Controllers
         }
 
         [HttpGet("/api/makes/")]
-        [Authorize]
         public async Task<IEnumerable<MakeResource>> GetMakes()
         {
             var makes = await context.Makes.Include(m => m.Models).ToListAsync();

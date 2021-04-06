@@ -1,5 +1,5 @@
 <body>
-  <div class="container" *ngIf="auth0Service.isLoading() | async; else loaded ">
+  <div class="container" *ngIf="auth0Service.isLoading$ | async; else loaded ">
     <loading></loading>
   </div>
   <ng-template #loaded>

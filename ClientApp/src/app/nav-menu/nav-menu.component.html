@@ -25,22 +25,17 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/vehicles']">Vehicles</a>
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/vehicles/new']">Vehicle</a>
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+          </li>          
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark" [routerLink]="['/vehicles']">Vehicles</a>
           </li>
           <li
-            *ngIf="auth0Service.isInRole('Admin')"
+            *ngIf="auth0Service.isInRole('admin')"
             class="nav-item"
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
@@ -58,13 +53,18 @@
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/profile']"
+              >Profile</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a *ngIf="auth0Service.auth0User$ | async as user" class="nav-link ">
               hello! {{user.name}} 
            </a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <login-button *ngIf="!(auth0Service.isAuthenticated() | async)"></login-button>
-            <logout-button *ngIf="(auth0Service.isAuthenticated() | async)"></logout-button>
+            <login-button *ngIf="!(auth0Service.isAuthenticated$ | async)"></login-button>
+            <logout-button *ngIf="(auth0Service.isAuthenticated$ | async)"></logout-button>
           </li>
         </ul>
       </div>

@@ -9,6 +9,7 @@ using vega.Persistence;
 using vega.Core;
 using vega.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using vega.Controllers;
 
 namespace vega
 {
@@ -31,8 +32,13 @@ namespace vega
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = "https://vegadevproject.us.auth0.com/";
-                options.Audience = "https://api.vega.dev.project";
+                options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
+                options.Audience = Configuration["Auth0:Audience"];
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.RequireAdminRole, policy => policy.RequireClaim(Configuration["Auth0:RolesClaim"], "admin"));
             });
 
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
@@ -67,6 +73,12 @@ namespace vega
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

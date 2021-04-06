@@ -30,6 +30,7 @@ import { Auth0Service } from './services/auth0.service';
 import { Auth0Guard } from './services/auth0-guard.service';
 import { AdminAuth0Guard } from './services/admin-auth0-guard.service';
 import { LoadingComponent } from './loading/loading.component';
+import { ProfileComponent } from './profile/profile.component';
 // import { AuthService } from './services/auth.service';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { LoadingComponent } from './loading/loading.component';
     AdminComponent,
     NonAuthorizedComponent,
     LoadingComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -56,10 +58,9 @@ import { LoadingComponent } from './loading/loading.component';
     FormsModule,
     AuthModule.forRoot({
       ...env.auth,
-      // cacheLocation: 'localstorage'
+      cacheLocation: 'localstorage',
       httpInterceptor: {
         allowedList: [
-          `${env.dev.apiUrl}/api/makes`,
           `${env.dev.apiUrl}/api/vehicles/*`
         ]
       }
@@ -68,13 +69,14 @@ import { LoadingComponent } from './loading/loading.component';
     ToastrModule.forRoot(), // ToastrModule added
     RouterModule.forRoot([
       { path: '', redirectTo: 'Vehicles', pathMatch: 'full' },
-      { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/new', component: VehicleFormComponent, canActivate: [Auth0Guard] },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent, canActivate: [Auth0Guard] },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'admin', component: AdminComponent, canActivate: [Auth0Guard, AdminAuth0Guard] },
+      { path: 'profile', component: ProfileComponent },
       { path: 'non-authorized', component: NonAuthorizedComponent },
     ])
   ],
