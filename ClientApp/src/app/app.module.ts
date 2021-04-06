@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule, AuthHttpInterceptor } from "@auth0/auth0-angular";
+import { ChartsModule } from 'ng2-charts';
 import { environment as env } from './../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -67,6 +68,7 @@ import { ProfileComponent } from './profile/profile.component';
     }),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    ChartsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'Vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent, canActivate: [Auth0Guard] },

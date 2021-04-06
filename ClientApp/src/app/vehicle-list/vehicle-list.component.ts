@@ -27,7 +27,7 @@ export class VehicleListComponent implements OnInit {
 
 
   constructor(
-    private auth0Service: Auth0Service,
+    public auth0Service: Auth0Service,
     private vehicleService: VehicleService) { }
 
   ngOnInit() {
