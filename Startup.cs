@@ -38,13 +38,16 @@ namespace vega
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Policies.RequireAdminRole, policy => policy.RequireClaim(Configuration["Auth0:RolesClaim"], "admin"));
+                options.AddPolicy(Policies.RequireAdminRole,
+                policy => policy.RequireClaim(Configuration["Auth0:RolesClaim"], "admin"));
             });
 
             services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IPhotoStorage, FileSystemPhotoStorage>();
 
             services.AddAutoMapper(typeof(Startup));
 
