@@ -15,9 +15,9 @@ namespace vega.Core
             this.photoStorage = photoStorage;
             this.unitOfWork = unitOfWork;
         }
-        public async Task<Photo> UploadPhoto(Vehicle vehicle, IFormFile file, string uploadsFolderPath)
+        public async Task<Photo> UploadPhoto(Vehicle vehicle, IFormFile file)
         {
-            var fileName = await photoStorage.StorePhoto(uploadsFolderPath, file);
+            var fileName = await photoStorage.StorePhoto(file);
             var photo = new Photo { FileName = fileName };
             vehicle.Photos.Add(photo);
             await unitOfWork.CompleteAsync();

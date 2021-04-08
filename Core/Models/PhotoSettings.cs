@@ -8,6 +8,8 @@ namespace vega.Core.Models
         public int MaxBytes { get; set; }
         public string[] AcceptedFileTypes { get; set; }
 
+        public string LocalFolder { get; set; }
+
         public bool IsSupported(string fileName)
         {
             return AcceptedFileTypes.Any(s => s == Path.GetExtension(fileName).ToLower());

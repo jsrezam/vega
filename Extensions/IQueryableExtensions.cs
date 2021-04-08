@@ -8,6 +8,7 @@ namespace vega.Extensions
 {
     public static class IQueryableExtensions
     {
+
         public static IQueryable<Vehicle> ApplyFiltering(this IQueryable<Vehicle> query, VehicleQuery queryObj)
         {
             if (queryObj.MakeId.HasValue)

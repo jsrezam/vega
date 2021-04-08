@@ -61,8 +61,7 @@ namespace vega.Controllers
             if (file.Length > photoSettings.MaxBytes) return BadRequest("Max file size exceeded.");
             if (!photoSettings.IsSupported(file.FileName)) return BadRequest("Invalid file type.");
 
-            var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-            var photo = await photoService.UploadPhoto(vehicle, file, uploadsFolderPath);
+            var photo = await photoService.UploadPhoto(vehicle, file);
 
             return Ok(mapper.Map<Photo, PhotoResource>(photo));
 
