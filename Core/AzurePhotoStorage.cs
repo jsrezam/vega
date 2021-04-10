@@ -12,7 +12,7 @@ namespace vega.Core
         private const string CONTAINER = "vegaphotos";
         public AzurePhotoStorage(IConfiguration configuration)
         {
-            this.configuration = configuration.GetConnectionString("AzureStorage");
+            this.configuration = configuration["KeyAzureStorage"];
         }
         public async Task<string> StorePhoto(IFormFile file)
         {
